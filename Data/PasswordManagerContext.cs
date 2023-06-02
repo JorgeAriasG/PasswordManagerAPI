@@ -11,5 +11,6 @@ namespace password_manager.api.Data
         }
 
         public DbSet<User> User { get; set; }
+        public DbSet<Password> Password { get; set; }
     }
 }

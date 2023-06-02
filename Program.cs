@@ -24,6 +24,7 @@ builder.Services.AddDbContext<PasswordManagerContext>(opt => opt.UseSqlServer(se
 
 // --------------- Add interfaces for repository ---------------
 builder.Services.AddScoped<IUser, UserRepository>();
+builder.Services.AddScoped<IPassword, PasswordRepository>();
 
 
 // --------------- Build the application ---------------
