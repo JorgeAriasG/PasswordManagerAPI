@@ -9,6 +9,7 @@ namespace password_manager.api.Profiles
         public UserProfile()
         {
             CreateMap<CreateUserDto, User>();
+            CreateMap<UpdateUserDto, User>();
             CreateMap<User, ReadUserDto>();
         }
     }

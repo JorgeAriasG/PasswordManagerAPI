@@ -16,6 +16,11 @@ namespace password_manager.api.Data
             return _context.User.ToList();
         }
 
+        public User GetUserById(Guid userId)
+        {
+            return _context.User.FirstOrDefault<User>(u => u.Id == userId);
+        }
+
         public void CreateUser(User user)
         {
             user.Id = Guid.NewGuid();
@@ -23,6 +28,16 @@ namespace password_manager.api.Data
             user.Created = DateTimeOffset.Now;
             user.IsEnabled = true;
             _context.Add(user);
+        }
+
+        public void UpdateUser(User user, Guid id)
+        {
+            User userToUpdate = GetUserById(id);
+
+            if (userToUpdate != null)
+            {
+                userToUpdate = user;
+            }
         }
 
         public bool SaveChanges()
