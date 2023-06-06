@@ -1,4 +1,4 @@
-namespace password_manager.api.Dtos
+namespace password_manager.api.Dtos.User
 {
     public class UpdateUserDto
     {

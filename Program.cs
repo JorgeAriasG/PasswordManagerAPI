@@ -22,6 +22,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PasswordManagerContext>(opt => opt.UseSqlServer(settings.GetConnectionString("PasswordManagerDB")));
 
+// --------------- Add session middleware ---------------
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "PasswordManagerCookie";
+    options.IdleTimeout = TimeSpan.FromSeconds(60);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // --------------- Add interfaces for repository ---------------
 builder.Services.AddScoped<IUser, UserRepository>();
 builder.Services.AddScoped<IPassword, PasswordRepository>();
@@ -40,4 +50,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseSession();
 app.Run();
