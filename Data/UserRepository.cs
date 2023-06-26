@@ -23,21 +23,17 @@ namespace password_manager.api.Data
 
         public void CreateUser(User user)
         {
-            user.Id = Guid.NewGuid();
-            user.AccountLevel = "Master";
-            user.Created = DateTimeOffset.Now;
-            user.IsEnabled = true;
             _context.Add(user);
         }
 
-        public void UpdateUser(User user, Guid id)
+        public void DeleteUser(User user)
         {
-            User userToUpdate = GetUserById(id);
+            _context.User.Remove(user);
+        }
 
-            if (userToUpdate != null)
-            {
-                userToUpdate = user;
-            }
+        public User LoginUser(User user)
+        {
+            return _context.User.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
         }
 
         public bool SaveChanges()

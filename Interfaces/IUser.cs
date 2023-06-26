@@ -7,7 +7,8 @@ namespace password_manager.api.Interfaces
         IEnumerable<User> GetAllUsers();
         User GetUserById(Guid userId);
         void CreateUser(User user);
-        void UpdateUser(User user, Guid id);
+        void DeleteUser(User user);
+        User LoginUser(User user);
         bool SaveChanges();
     }
 }

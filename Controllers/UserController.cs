@@ -1,12 +1,14 @@
+using System.Net;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using password_manager.api.Dtos;
+using password_manager.api.Constants;
+using password_manager.api.Dtos.User;
 using password_manager.api.Interfaces;
 using password_manager.api.Models;
 
 namespace password_manager.api.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route($"api/{Constants.Constants.API_VERSION}/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -45,6 +47,11 @@ namespace password_manager.api.Controllers
         public ActionResult<ReadUserDto> CreateUser(CreateUserDto user)
         {
             var userModel = _mapper.Map<User>(user);
+            userModel.Id = Guid.NewGuid();
+            userModel.AccountLevel = "Master";
+            userModel.Created = DateTimeOffset.Now;
+            userModel.IsEnabled = true;
+
             _userRepository.CreateUser(userModel);
             _userRepository.SaveChanges();
 
@@ -55,15 +62,68 @@ namespace password_manager.api.Controllers
 
         [HttpPatch]
         [Route("{id}")]
-        public ActionResult<ReadUserDto> UpdateUser([FromBody] UpdateUserDto user, Guid id)
+        public ActionResult<ReadUserDto> UpdateUser(UpdateUserDto user, Guid id)
         {
-            var userModel = _mapper.Map<User>(user);
-            _userRepository.UpdateUser(userModel, id);
+            var userToUpdate = _userRepository.GetUserById(id);
+
+            if (!String.IsNullOrEmpty(user.Firstname))
+                userToUpdate.Firstname = user.Firstname;
+            if (!String.IsNullOrEmpty(user.Lastname))
+                userToUpdate.Lastname = user.Lastname;
+            if (!String.IsNullOrEmpty(user.Email))
+                userToUpdate.Email = user.Email;
+            if (user.PhoneNumber > 0)
+                userToUpdate.PhoneNumber = user.PhoneNumber;
+
             _userRepository.SaveChanges();
 
-            var userRead = _mapper.Map<ReadUserDto>(userModel);
+            var userRead = _mapper.Map<ReadUserDto>(userToUpdate);
 
             return userRead;
+        }
+
+        [HttpDelete]
+        public ActionResult<bool> DeleteUser(Guid id, bool isSoftDelete)
+        {
+            var user = _userRepository.GetUserById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (isSoftDelete)
+            {
+                user.IsEnabled = false;
+            }
+            else
+            {
+                _userRepository.DeleteUser(user);
+            }
+
+            _userRepository.SaveChanges();
+
+            return true;
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public ActionResult<Guid> Login(LoginUserDto user)
+        {
+            var userModel = _mapper.Map<User>(user);
+            var userToLogin = _userRepository.LoginUser(userModel);
+
+            if (!String.IsNullOrEmpty(HttpContext.Session.GetString(UserSession.SessionKeyUserId)))
+                return BadRequest();
+
+            if (userToLogin != null)
+            {
+                HttpContext.Session.SetString(UserSession.SessionKeyUserId, userToLogin.Id.ToString());
+                return Ok(Guid.Parse(HttpContext.Session.GetString(UserSession.SessionKeyUserId)));
+            }
+
+            return NotFound();
+
         }
     }
 }
