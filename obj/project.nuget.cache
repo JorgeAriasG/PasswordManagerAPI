@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5Qeg6r5lZnl+AwDGXuEbGrJLV1QwiYnwSt4QjQWdAAKLjaHIsgHIsqRDmghBqtyPtVah+qRHyrvVB58QBZRb6A==",
+  "dgSpecHash": "5xM4Wl9eFm9AcsUiSY6POZVgMBYW/5xh/H0BK2He/EAYWFcotlfpGbARjlaKTtif4k/XogGdz62piICL6FzM7w==",
   "success": true,
-  "projectFilePath": "E:\\SoftDev\\NET\\password-manager.api\\password-manager.api.csproj",
+  "projectFilePath": "F:\\PersonalProjects\\PasswordManager\\PasswordManager.API\\password-manager.api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jorge\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Jorge\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
