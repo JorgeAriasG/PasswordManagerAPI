@@ -3939,11 +3939,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\SoftDev\\NET\\password-manager.api\\password-manager.api.csproj",
+      "projectUniqueName": "F:\\PersonalProjects\\PasswordManager\\PasswordManager.API\\password-manager.api.csproj",
       "projectName": "password-manager.api",
-      "projectPath": "E:\\SoftDev\\NET\\password-manager.api\\password-manager.api.csproj",
+      "projectPath": "F:\\PersonalProjects\\PasswordManager\\PasswordManager.API\\password-manager.api.csproj",
       "packagesPath": "C:\\Users\\Jorge\\.nuget\\packages\\",
-      "outputPath": "E:\\SoftDev\\NET\\password-manager.api\\obj\\",
+      "outputPath": "F:\\PersonalProjects\\PasswordManager\\PasswordManager.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Jorge\\AppData\\Roaming\\NuGet\\NuGet.Config",

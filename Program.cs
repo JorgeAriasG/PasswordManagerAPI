@@ -5,7 +5,17 @@ using Microsoft.EntityFrameworkCore;
 using password_manager.api.Data;
 using password_manager.api.Interfaces;
 
+var AllowSpecificCORS = "_AllowSpecificCORS";
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowSpecificCORS,
+    policy =>
+    {
+        policy.WithOrigins("chrome-extension://mgpakmhmdohngdmcdmaffkpomackdlnc").AllowAnyHeader();
+    });
+});
 
 // --------------- Get the config file ---------------
 IConfiguration config = new ConfigurationBuilder()
@@ -48,6 +58,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(AllowSpecificCORS);
 app.UseAuthorization();
 app.MapControllers();
 app.UseSession();
