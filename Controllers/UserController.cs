@@ -8,7 +8,7 @@ using password_manager.api.Models;
 
 namespace password_manager.api.Controllers
 {
-    [Route($"api/{Constants.Constants.API_VERSION}/[controller]")]
+    [Route($"{Constants.Constants.API_VERSION}/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
