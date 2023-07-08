@@ -8,7 +8,7 @@ using password_manager.api.Models;
 namespace password_manager.api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route($"{Constants.Constants.API_VERSION}/[controller]")]
     public class PasswordController : ControllerBase
     {
         private readonly IPassword _passwordRepository;
@@ -20,12 +20,12 @@ namespace password_manager.api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ReadPasswordDto>> GetAllPasswordByUser()
+        [Route("{id}")]
+        public ActionResult<IEnumerable<ReadPasswordDto>> GetAllPasswordByUser(string id)
         {
-            string userId = HttpContext.Session.GetString(UserSession.SessionKeyUserId);
-            if (!String.IsNullOrEmpty(userId))
+            if (!String.IsNullOrEmpty(id))
             {
-                var passwords = _passwordRepository.GetAllPasswords(Guid.Parse(userId));
+                var passwords = _passwordRepository.GetAllPasswords(Guid.Parse(id));
 
                 if (passwords.Count() > 0)
                 {
