@@ -40,5 +40,11 @@ namespace password_manager.api.Data
         {
             return (_context.SaveChanges() >= 0);
         }
+
+        public string GetHashedPasswordByEmail(string email)
+        {
+            return _context.User.Where(u => u.Email == email)
+                .Select(u => u.Password).FirstOrDefault().ToString();
+        }
     }
 }
