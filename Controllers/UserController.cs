@@ -123,7 +123,27 @@ namespace password_manager.api.Controllers
             }
 
             return NotFound();
+        }
 
+        [HttpGet]
+        [Route("salted/{email}")]
+        public ActionResult<string> GetHashedPasswordByEmail(string email)
+        {
+
+            if (!String.IsNullOrEmpty(email))
+            {
+                string hashedPass;
+                hashedPass = _userRepository.GetHashedPasswordByEmail(email);
+
+                if (!String.IsNullOrEmpty(hashedPass))
+                {
+                    return hashedPass;
+                }
+
+                return NotFound();
+            }
+
+            return BadRequest();
         }
     }
 }

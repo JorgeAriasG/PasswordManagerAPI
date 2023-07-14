@@ -41,10 +41,11 @@ namespace password_manager.api.Controllers
         //TODO: Maybe an endpoint to get a specific password
 
         [HttpPost]
-        public ActionResult<ReadPasswordDto> CreatePassword(CreatePasswordDto password, Guid userId)
+        [Route("{id}")]
+        public ActionResult<ReadPasswordDto> CreatePassword(CreatePasswordDto password, string id)
         {
             var passwordModel = _mapper.Map<Password>(password);
-            passwordModel.UserId = userId;
+            passwordModel.UserId = Guid.Parse(id);
             passwordModel.Creted = DateTimeOffset.Now;
             _passwordRepository.CreatePassword(passwordModel);
             _passwordRepository.SaveChanges();
